@@ -70,7 +70,6 @@ export const store = createStore({
 			})
 
 			Object.keys(state.filters).forEach(filterItemKey => {
-				console.log(state.filters[filterItemKey] !== state.appliedFilter[filterItemKey])
 				if(state.filters[filterItemKey] !== state.appliedFilter[filterItemKey] && state.filters[filterItemKey]){
 					data = data.filter((filterItem) => {
 						return String(filterItem[filterItemKey]) === String(state.filters[filterItemKey])

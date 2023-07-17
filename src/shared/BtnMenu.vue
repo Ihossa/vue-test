@@ -7,7 +7,6 @@
    }
  })
 
- console.log(props.openMenu)
  const emits = defineEmits(['onClick'])
 </script>
 
