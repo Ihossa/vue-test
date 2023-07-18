@@ -45,7 +45,7 @@ onMounted(() => {
 .navLink {
   text-decoration: none;
   color: white;
-  margin-bottom: 12px;
+  margin: 18px 0;
   display: flex;
   align-items: center;
   gap: 4px;

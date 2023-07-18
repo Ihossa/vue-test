@@ -14,8 +14,10 @@ const router = createRouter({
       name: 'film',
       component: () => import('../views/CurrentFilm.vue')
     }
-
   ],
+  scrollBehavior() {
+    return { top: 0 }
+  },
 })
 
 export default router
