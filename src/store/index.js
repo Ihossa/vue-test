@@ -1,20 +1,18 @@
 import { createStore } from 'vuex'
 import { parseForFilter } from '../helpers/parseForFilter'
 
+export const defaultFilter = {
+  genre_type: '',
+  year: '',
+  rating_score: ''
+}
+
 export const store = createStore({
   state() {
     return {
       films: [],
-      filters: {
-        genre_type: '',
-        year: '',
-        rating_score: ''
-      },
-      appliedFilter: {
-        genre_type: '',
-        year: '',
-        rating_score: ''
-      },
+      filters: {...defaultFilter},
+      appliedFilter: {...defaultFilter},
       optionsForGenre: [],
       optionsForYear: []
     }

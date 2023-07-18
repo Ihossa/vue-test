@@ -14,7 +14,8 @@ const router = createRouter({
       name: 'film',
       component: () => import('../views/CurrentFilm.vue')
     }
-  ]
+
+  ],
 })
 
 export default router

@@ -39,6 +39,7 @@ const changeVisible = () => {
           @update:modelValue="chooseGenre"
           :model-value="store.state.filters.genre_type"
           placeholder="Виберіть жанр"
+          clearable
         >
           <el-option
             text-color="green"
@@ -56,6 +57,7 @@ const changeVisible = () => {
           @update:modelValue="chooseYear"
           :model-value="store.state.filters.year"
           placeholder="Виберіть рік випуску"
+          clearable
         >
           <el-option
             v-for="year in store.state.optionsForYear"

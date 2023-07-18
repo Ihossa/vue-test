@@ -3,11 +3,16 @@ import { useStore } from 'vuex'
 import { onMounted } from 'vue'
 import FiltersFilms from '../components/FiltersFilms.vue'
 import MovieList from '../components/MovieList.vue'
+import {defaultFilter} from "../store";
 
 const store = useStore()
 
 onMounted(() => {
-  store.dispatch('fetchFilms')
+  if(JSON.stringify(store.state.filters) !== JSON.stringify(defaultFilter)){
+    store.dispatch('applyFilter')
+  } else {
+    store.dispatch('fetchFilms')
+  }
 })
 </script>
 
