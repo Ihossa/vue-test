@@ -13,7 +13,7 @@ const store = useStore()
   <div v-show="!!store.state.films.length && !store.state.isLoading" class="container">
     <card-item-film v-for="film in store.state.films" :key="film" :film="film" />
   </div>
-  <loading-icon v-if="store.state.isLoading" />
+  <loading-icon v-show="store.state.isLoading" />
 </template>
 
 <style scoped lang="scss">
