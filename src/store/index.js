@@ -71,7 +71,6 @@ export const store = createStore({
 
       Object.keys(state.filters).forEach((filterItemKey) => {
         if (
-          state.filters[filterItemKey] !== state.appliedFilter[filterItemKey] &&
           state.filters[filterItemKey]
         ) {
           data = data.filter((filterItem) => {
