@@ -18,13 +18,10 @@
 
 .label{
   font-size: 20px;
-
-  @include medium{
-    font-size: 40px;
-  }
+  margin: 0;
 }
 
 .img {
-  max-width: 350px;
+  max-width: 100px;
 }
 </style>

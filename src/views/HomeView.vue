@@ -2,13 +2,12 @@
 import { useStore } from 'vuex'
 import { onMounted } from 'vue'
 import FiltersFilms from '../components/FiltersFilms.vue'
-import MovieList from '../components/MovieList.vue'
-import {defaultFilter} from "../store";
+import GeneratedFilm from "../components/GeneratedFilm.vue";
 
 const store = useStore()
 
 onMounted(() => {
-  if(JSON.stringify(store.state.filters) !== JSON.stringify(defaultFilter)){
+  if(!store.getters.isDefaultFilter){
     store.dispatch('applyFilter')
   } else {
     store.dispatch('fetchFilms')
@@ -19,12 +18,30 @@ onMounted(() => {
 <template>
   <div class="container">
     <filters-films />
-    <movie-list />
+    <generated-film />
   </div>
 </template>
 
-<style scoped>
-.container {
-  display: flex;
-}
+<style scoped lang="scss">
+  @import '../assets/styles/variable.scss';
+  @import '../assets/styles/media.scss';
+
+  .container {
+    margin: 12px;
+    border-radius: 12px;
+    display: flex;
+    background: $color-background-block;
+    flex-direction: column;
+    align-items: center;
+    min-height: 260px;
+
+    @include medium{
+      flex-direction: row;
+      margin: 8px;
+    }
+
+    @include large{
+      margin: 24px;
+    }
+  }
 </style>

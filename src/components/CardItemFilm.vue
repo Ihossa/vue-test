@@ -43,33 +43,29 @@ const props = defineProps({
 
 .card {
   display: flex;
-  padding: 10px;
   transition: 0.1s;
   flex-direction: column;
-  align-items: center;
-  background: $color-background-block;
   border-radius: 12px;
 
   @include small {
     flex-direction: row;
+    align-items: start;
     background: none;
-
-    &:hover {
-      transition: 0.1s;
-      background: $color-background-block;
-    }
   }
 }
 
 .img {
   border-radius: 12px;
   object-fit: cover;
-  margin-bottom: 8px;
+  min-width: 160px;
+  width: fit-content;
+  height: 200px;
+  margin: 12px auto;
 
   @include small {
-    margin-bottom: 0;
-    min-width: 120px;
-    height: 160px;
+    min-width: 160px;
+    height: 200px;
+    margin: 0;
   }
 }
 
@@ -98,9 +94,6 @@ const props = defineProps({
 
 .btn {
   margin: 14px auto;
-
-  @include small {
-    margin: 0 !important;
-  }
+  width: 100%;
 }
 </style>

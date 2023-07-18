@@ -1,12 +1,8 @@
 <script setup>
 import { useStore } from 'vuex'
 import ButtonMain from '../shared/ButtonMain.vue'
-import BtnMenu from '../shared/BtnMenu.vue'
-import { ref } from 'vue'
 
 const store = useStore()
-
-let isOpenMenu = ref(false)
 
 const chooseGenre = (value) => {
   store.commit('setFilter', { type: 'genre_type', value: value })
@@ -20,21 +16,24 @@ const chooseRate = (value) => {
   store.commit('setFilter', { type: 'rating_score', value: value })
 }
 
-const changeVisible = () => {
-  isOpenMenu.value = !isOpenMenu.value
+const applyFilter = () => {
+  if(store.getters.isChangedFilters){
+    store.dispatch('applyFilter')
+    return;
+  }
+  store.commit('generatedFilmDebounce')
 }
 
-const applyFilter = () => {
-  isOpenMenu.value = false
-  store.dispatch('applyFilter')
+const getButtonLabel = () => {
+  if(!store.state.isLoading ) return 'Генерувати'
+  if(store.state.isLoading) return 'Генеруємоє...'
 }
 
 </script>
 
 <template>
   <div class="sideBar">
-    <btn-menu class="burger" :open-menu="isOpenMenu" @onClick="changeVisible" />
-    <el-form label-width="120px" label-position="left" :class="isOpenMenu ? 'form' : 'form-hidden'">
+    <el-form label-width="120px" label-position="left">
       <el-form-item class="label" label="Жанр">
         <el-select
           class="select"
@@ -74,8 +73,8 @@ const applyFilter = () => {
         <el-input :model-value="store.state.filters.rating_score" @input="chooseRate" />
       </el-form-item>
       <button-main
-        :disable="!store.getters.isChangedFilters"
-        label="Застосувати фільтр"
+        :disable="store.state.isLoading"
+        :label="getButtonLabel()"
         @onClick="applyFilter"
       />
     </el-form>
@@ -87,25 +86,13 @@ const applyFilter = () => {
 @import '../assets/styles/media.scss';
 
 .sideBar {
-  background: $color-background-menu;
-  padding: 20px 25px;
-  min-height: 100dvh;
-  position: fixed;
-  z-index: 100;
+  padding: 12px;
+  width: 320px;
+  min-width: 320px;
+  position: relative;
 
-  @include large {
-    width: 400px;
-    min-width: 320px;
-    position: relative;
-    background: $color-background-block;
-  }
-}
-
-.burger {
-  display: block;
-
-  @include large {
-    display: none;
+  @include large{
+    padding: 24px;
   }
 }
 
@@ -119,14 +106,6 @@ const applyFilter = () => {
 
 .option{
   text-transform: capitalize;
-}
-
-.form-hidden {
-  display: none;
-
-  @include large {
-    display: block;
-  }
 }
 
 .label {

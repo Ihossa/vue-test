@@ -39,7 +39,7 @@
 
 <style scoped>
   svg{
-    width: 5%;
+    width: 15%;
     margin: 50px auto;
     display: flex;
     justify-content: center;
