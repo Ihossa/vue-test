@@ -2,7 +2,8 @@
 import { useStore } from 'vuex'
 import { onMounted } from 'vue'
 import CardFilmDetail from '../components/CardFilmDetail.vue'
-import NavigationBackIcon from '../shared/icons/navigationBackIcon.vue'
+import NavigationBackIcon from '../shared/icons/NavigationBackIcon.vue'
+import LoadingIcon from "../shared/icons/LoadingIcon.vue";
 
 const store = useStore()
 
@@ -21,6 +22,7 @@ onMounted(() => {
     </router-link>
     <card-film-detail />
   </div>
+  <loading-icon v-if="store.state.films.length === 0" />
 </template>
 
 <style scoped lang="scss">

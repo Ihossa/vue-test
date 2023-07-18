@@ -14,7 +14,8 @@ export const store = createStore({
       filters: {...defaultFilter},
       appliedFilter: {...defaultFilter},
       optionsForGenre: [],
-      optionsForYear: []
+      optionsForYear: [],
+      isLoading: false
     }
   },
 
@@ -43,11 +44,16 @@ export const store = createStore({
 
     setAppliedFilter(state) {
       state.appliedFilter = { ...state.filters }
+    },
+
+    setLoading(state, payload) {
+      state.isLoading = payload
     }
   },
 
   actions: {
     fetchFilms({ commit }) {
+      commit('setLoading', true)
       fetch('/movies_list.json')
         .then((data) =>
           data.json().then((data) => {
@@ -60,25 +66,37 @@ export const store = createStore({
         .catch((err) => {
           console.error(err)
         })
+        .finally(() => {
+          commit('setLoading', false)
+        })
     },
 
     async applyFilter({ state, commit }) {
-      let data = await fetch('/movies_list.json').then((data) => {
-        return data.json()
-      })
+      commit('setLoading', true)
 
-      Object.keys(state.filters).forEach((filterItemKey) => {
-        if (
-          state.filters[filterItemKey]
-        ) {
-          data = data.filter((filterItem) => {
-            return String(filterItem[filterItemKey]) === String(state.filters[filterItemKey])
-          })
-        }
-      })
+      try {
+        let data = await fetch('/movies_list.json').then((data) => {
+          return data.json()
+        })
 
-      commit('setFilms', data)
-      commit('setAppliedFilter')
+        Object.keys(state.filters).forEach((filterItemKey) => {
+          if (
+            state.filters[filterItemKey]
+          ) {
+            data = data.filter((filterItem) => {
+              return String(filterItem[filterItemKey]) === String(state.filters[filterItemKey])
+            })
+          }
+        })
+
+        commit('setFilms', data)
+        commit('setAppliedFilter')
+      } catch (err){
+        console.error(err)
+      } finally {
+        commit('setLoading', false)
+      }
+
     }
   }
 })
