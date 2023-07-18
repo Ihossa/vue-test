@@ -1,6 +1,6 @@
 <script setup>
 import { useStore } from 'vuex'
-import NothingFound from './NothingFound.vue'
+import NothingFound from '../shared/NothingFound.vue'
 import CardItemFilm from './CardItemFilm.vue'
 
 const store = useStore()
@@ -15,6 +15,7 @@ const store = useStore()
 
 <style scoped lang="scss">
 @import '../assets/styles/variable';
+
 .container {
   display: flex;
   flex-direction: column;

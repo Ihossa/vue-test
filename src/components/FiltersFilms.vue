@@ -20,13 +20,15 @@ const chooseRate = (value) => {
   store.commit('setFilter', { type: 'rating_score', value: value })
 }
 
-const applyFilter = () => {
-  store.dispatch('applyFilter')
-}
-
 const changeVisible = () => {
   isOpenMenu.value = !isOpenMenu.value
 }
+
+const applyFilter = () => {
+  isOpenMenu.value = false
+  store.dispatch('applyFilter')
+}
+
 </script>
 
 <template>

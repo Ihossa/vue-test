@@ -54,7 +54,7 @@ export const store = createStore({
             commit('setFilms', data)
             let { listGenre, listYear } = parseForFilter(data)
             commit('setOptionsForGenre', listGenre)
-            commit('setOptionsForYear', listYear)
+            commit('setOptionsForYear', Array.from(listYear.values()).sort((a, b) => b - a))
           })
         )
         .catch((err) => {
