@@ -50,7 +50,7 @@ export const store = createStore({
 
   actions: {
     fetchFilms({ commit }) {
-      fetch('../movies_list.json')
+      fetch('/movies_list.json')
         .then((data) =>
           data.json().then((data) => {
             commit('setFilms', data)
@@ -65,7 +65,7 @@ export const store = createStore({
     },
 
     async applyFilter({ state, commit }) {
-      let data = await fetch('../movies_list.json').then((data) => {
+      let data = await fetch('/movies_list.json').then((data) => {
         return data.json()
       })
 

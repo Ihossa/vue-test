@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Нічого не знайдено</h1>
-    <el-image class="img" src="../src/assets/notFound.png" />
+    <el-image class="img" src="/notFound.png" />
   </div>
 </template>
 
