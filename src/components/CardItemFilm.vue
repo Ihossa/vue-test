@@ -73,10 +73,11 @@ const props = defineProps({
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  height: 100%;
 
   @include small {
-    height: 100%;
     margin-left: 16px;
+    min-height: 210px;
   }
 }
 
