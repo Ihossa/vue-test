@@ -1,10 +1,9 @@
 <script setup>
-import {useStore} from "vuex";
-import NothingFound from "./NothingFound.vue";
-import CardItemFilm from "./CardItemFilm.vue";
+import { useStore } from 'vuex'
+import NothingFound from './NothingFound.vue'
+import CardItemFilm from './CardItemFilm.vue'
 
 const store = useStore()
-
 </script>
 
 <template>
@@ -15,14 +14,13 @@ const store = useStore()
 </template>
 
 <style scoped lang="scss">
-  @import "../assets/styles/variable";
-  .container{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px 25px;
-    position: relative;
-    margin-left: 70px;
-  }
-
+@import '../assets/styles/variable';
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px 25px;
+  position: relative;
+  margin-left: 70px;
+}
 </style>

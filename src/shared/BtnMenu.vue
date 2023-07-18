@@ -1,24 +1,31 @@
 <script setup>
- import {defineEmits} from "vue";
+import { defineEmits } from 'vue'
 
- const props = defineProps({
-   openMenu: {
-     type: Boolean
-   }
- })
+const props = defineProps({
+  openMenu: {
+    type: Boolean
+  }
+})
 
- const emits = defineEmits(['onClick'])
+const emits = defineEmits(['onClick'])
 </script>
 
 <template>
-  <div class="menu-wrapper" @click="() => {emits('onClick')}" :class="{ active: props.openMenu }">
+  <div
+    class="menu-wrapper"
+    @click="
+      () => {
+        emits('onClick')
+      }
+    "
+    :class="{ active: props.openMenu }"
+  >
     <div class="menu-bar one"></div>
     <div class="menu-bar two"></div>
   </div>
 </template>
 
 <style scoped>
-
 .menu-wrapper {
   width: 20px;
   height: auto;
@@ -41,8 +48,6 @@
   animation-timing-function: ease-out;*/
 }
 
-
-
 .one {
   top: 0px;
   animation-delay: 0.1s;
@@ -53,7 +58,6 @@
   top: 8px;
   transition: all 0.3s;
 }
-
 
 @keyframes slideOut {
   0% {
@@ -81,14 +85,14 @@
 }
 
 .menu-wrapper:hover .menu-bar.active {
-  animation:none;
+  animation: none;
 }
-.active .one{
+.active .one {
   top: 50%;
   left: 0%;
   transform: rotate(45deg);
 }
-.active .two{
+.active .two {
   top: 50%;
   left: 0%;
   transform: rotate(-45deg);

@@ -6,14 +6,14 @@
 </template>
 
 <style scoped>
-  .container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-  }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 
-  .img{
-    max-width: 350px;
-  }
+.img {
+  max-width: 350px;
+}
 </style>

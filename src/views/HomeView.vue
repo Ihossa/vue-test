@@ -1,8 +1,8 @@
 <script setup>
-import {useStore} from "vuex";
-import {onMounted} from "vue";
-import FiltersFilms from "../components/FiltersFilms.vue";
-import MovieList from "../components/MovieList.vue";
+import { useStore } from 'vuex'
+import { onMounted } from 'vue'
+import FiltersFilms from '../components/FiltersFilms.vue'
+import MovieList from '../components/MovieList.vue'
 
 const store = useStore()
 
@@ -19,7 +19,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-  .container{
-    display: flex;
-  }
+.container {
+  display: flex;
+}
 </style>

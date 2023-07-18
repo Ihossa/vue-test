@@ -1,17 +1,16 @@
 <script setup>
-  import {useStore} from "vuex";
-  import {onMounted} from "vue";
-  import CardFilmDetail from "../components/CardFilmDetail.vue";
-  import NavigationBackIcon from "../shared/icons/navigationBackIcon.vue";
+import { useStore } from 'vuex'
+import { onMounted } from 'vue'
+import CardFilmDetail from '../components/CardFilmDetail.vue'
+import NavigationBackIcon from '../shared/icons/navigationBackIcon.vue'
 
-  const store = useStore()
+const store = useStore()
 
-  onMounted(() => {
-    if(store.state.films.length === 0){
-      store.dispatch('fetchFilms');
-    }
-  })
-
+onMounted(() => {
+  if (store.state.films.length === 0) {
+    store.dispatch('fetchFilms')
+  }
+})
 </script>
 
 <template>
@@ -25,31 +24,31 @@
 </template>
 
 <style scoped lang="scss">
-  @import "../assets/styles/variable";
-  @import "../assets/styles/media";
+@import '../assets/styles/variable';
+@import '../assets/styles/media';
 
-  .container{
-    max-width: 600px;
-    margin: 15px;
+.container {
+  max-width: 600px;
+  margin: 15px;
 
-    @include small{
-      margin: 15px auto;
-    }
+  @include small {
+    margin: 15px auto;
   }
+}
 
-  .icon{
-    max-width: 18px;
-    max-height: 18px;
-    color: white;
-  }
+.icon {
+  max-width: 18px;
+  max-height: 18px;
+  color: white;
+}
 
-  .navLink{
-    text-decoration: none;
-    color: white;
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-weight: 400;
-  }
+.navLink {
+  text-decoration: none;
+  color: white;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 400;
+}
 </style>
