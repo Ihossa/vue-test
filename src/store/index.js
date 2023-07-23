@@ -16,6 +16,7 @@ export const store = createStore({
       appliedFilter: {...defaultFilter},
       optionsForGenre: [],
       optionsForYear: [],
+      currentFilm: Object,
       isLoading: false,
       generatedFilms: undefined,
     }
@@ -25,15 +26,13 @@ export const store = createStore({
     isChangedFilters(state) {
       return JSON.stringify(state.filters) !== JSON.stringify(state.appliedFilter)
     },
-
-    isDefaultFilter(state) {
-      return JSON.stringify(state.filters) === JSON.stringify(defaultFilter)
-    }
   },
 
   mutations: {
     setFilter(state, payload) {
-      state.filters[payload.type] = payload.value
+      const newFilter = {...state.filters}
+      newFilter[payload.type] = payload.value;
+      state.filters = newFilter;
     },
 
     generatedFilm(state) {
@@ -45,7 +44,11 @@ export const store = createStore({
       setTimeout(() => {
         state.generatedFilms = state.films[randomInteger(0, state.films.length - 1)];
         state.isLoading = false;
-      }, 1000)
+      }, 2000)
+    },
+
+    setCurrentFilmById(state, payload) {
+      state.currentFilm = state.films.find((film) => String(film.id) === String(payload))
     },
 
     setOptionsForGenre(state, payload) {
@@ -70,43 +73,59 @@ export const store = createStore({
   },
 
   actions: {
-    fetchFilms({ commit }) {
-      commit('setLoading', true)
-      fetch('/movies_list.json')
-        .then((data) =>
-          data.json().then((data) => {
-            commit('setFilms', data)
-            let { listGenre, listYear } = parseForFilter(data)
-            commit('generatedFilm')
-            commit('setOptionsForGenre', listGenre)
-            commit('setOptionsForYear', Array.from(listYear.values()).sort((a, b) => b - a))
-          })
-        )
-        .catch((err) => {
-          console.error(err)
-        })
-        .finally(() => {
-          commit('setLoading', false)
-        })
+
+    async fetchFilms() {
+      try {
+        return await fetch('/movies_list.json').then((data) => data.json())
+      } catch(err) {
+        console.error(err)
+      }
     },
 
-    async applyFilter({ state, commit }) {
-      commit('setLoading', true)
-
+    async fetchFilmsAndSetCurrent({dispatch, commit}, idFilm) {
       try {
-        let data = await fetch('/movies_list.json').then((data) => {
-          return data.json()
-        })
+        commit('setLoading', true)
+        const listFilms = await dispatch('fetchFilms')
+        commit('setFilms', listFilms)
+        commit('setCurrentFilmById', idFilm)
+      } catch (err){
+        console.log(err)
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+
+    async fetchFilmsWithFilter({ commit, dispatch}) {
+      try {
+        commit('setLoading', true)
+        const listFilms = await dispatch('fetchFilms')
+        let { listGenre, listYear } = parseForFilter(listFilms)
+        commit('setFilms', listFilms)
+        commit('generatedFilm')
+        commit('setOptionsForGenre', listGenre);
+        commit('setOptionsForYear', Array.from(listYear.values()).sort((a, b) => b - a))
+      } catch (err){
+        console.log(err)
+      } finally {
+        commit('setLoading', false)
+      }
+    },
+
+
+    async applyFilter({ state, commit, dispatch }) {
+      try {
+        commit('setLoading', true)
+        let listFilms = await dispatch('fetchFilms')
         Object.keys(state.filters).forEach((filterItemKey) => {
           if (
             state.filters[filterItemKey]
           ) {
-            data = data.filter((filterItem) => {
+            listFilms = listFilms.filter((filterItem) => {
               return String(filterItem[filterItemKey]) === String(state.filters[filterItemKey])
             })
           }
         })
-        commit('setFilms', data)
+        commit('setFilms', listFilms)
         commit('setAppliedFilter')
         commit('generatedFilm')
       } catch (err){
@@ -114,7 +133,6 @@ export const store = createStore({
       } finally {
         commit('setLoading', false)
       }
-
     }
   }
 })

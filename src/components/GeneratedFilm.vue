@@ -1,19 +1,19 @@
 <script setup>
-import { useStore } from 'vuex'
 import NothingFound from '../shared/NothingFound.vue'
 import CardItemFilm from './CardItemFilm.vue'
 import LoadingIcon from "../shared/icons/LoadingIcon.vue";
+import {mapState} from "@/store/hooks";
 
-const store = useStore()
+const {films, isLoading, generatedFilms} = mapState()
 
 </script>
 
 <template>
-  <NothingFound v-if="!store.state.films.length && !store.state.isLoading" />
-  <div v-if="store.state.generatedFilms && !store.state.isLoading" class="container">
-    <card-item-film :film="store.state.generatedFilms" />
+  <NothingFound v-if="!films.length && !isLoading" />
+  <div v-if="generatedFilms && !isLoading" class="container">
+    <card-item-film :film="generatedFilms" />
   </div>
-  <loading-icon v-if="store.state.isLoading" />
+  <loading-icon v-if="isLoading" />
 </template>
 
 <style scoped lang="scss">

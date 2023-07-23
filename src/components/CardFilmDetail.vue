@@ -1,29 +1,29 @@
 <script setup>
-import { useStore } from 'vuex'
-import { useRoute } from 'vue-router/dist/vue-router'
+  const props = defineProps({
+    film: {
+      type: Object,
+      required: true
+    }
+  })
 
-const store = useStore()
-const route = useRoute()
-
-const film = store.state.films.find((film) => String(film.id) === String(route.params.id))
 </script>
 
 <template>
-  <div class="card">
-    <el-image fit="cover" contain class="img" lazy :src="film.image_path">
+  <div class="card" v-if="props.film">
+    <el-image fit="cover" contain class="img" lazy :src="props.film.image_path">
       <template #placeholder>
         <div class="image-slot">Loading<span class="dot">...</span></div>
       </template>
     </el-image>
     <div class="content">
       <div class="info">
-        <span class="title">{{ film.title }}</span>
+        <span class="title">{{ props.film.title }}</span>
         <div class="detail">
-          <span>{{ film.year }}</span>
-          <span>рейтинг: {{ film.rating_score }}</span>
+          <span>{{ props.film.year }}</span>
+          <span>рейтинг: {{ props.film.rating_score }}</span>
         </div>
         <div class="description">
-          {{ film.description }}
+          {{ props.film.description }}
         </div>
       </div>
     </div>
@@ -49,9 +49,17 @@ const film = store.state.films.find((film) => String(film.id) === String(route.p
   border-radius: 12px;
   object-fit: cover;
   margin-bottom: 8px;
+  height: 200px;
+  width: 133px;
+
+  @include small {
+    height: 300px;
+    width: 200px;
+  }
 
   @include large {
-    min-height: 400px;
+    height: 400px;
+    width: 260px;
   }
 }
 

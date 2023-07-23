@@ -1,32 +1,20 @@
 <script setup>
-import { useStore } from 'vuex'
 import ButtonMain from '../shared/ButtonMain.vue'
+import {mapActions, mapGetters, mapMutations, mapState} from "@/store/hooks";
 
-const store = useStore()
+const {filters, isLoading, optionsForGenre, optionsForYear} = mapState()
+const {isChangedFilters} = mapGetters()
+const {setFilter, generatedFilmDebounce} = mapMutations()
+const {applyFilter} = mapActions()
 
-const chooseGenre = (value) => {
-  store.commit('setFilter', { type: 'genre_type', value: value })
-}
+const generateFilm = () => {
+  console.log(isChangedFilters)
 
-const chooseYear = (value) => {
-  store.commit('setFilter', { type: 'year', value: value })
-}
-
-const chooseRate = (value) => {
-  store.commit('setFilter', { type: 'rating_score', value: value })
-}
-
-const applyFilter = () => {
-  if(store.getters.isChangedFilters){
-    store.dispatch('applyFilter')
+  if(isChangedFilters){
+    applyFilter()
     return;
   }
-  store.commit('generatedFilmDebounce')
-}
-
-const getButtonLabel = () => {
-  if(!store.state.isLoading ) return 'Генерувати'
-  if(store.state.isLoading) return 'Генеруємоє...'
+  generatedFilmDebounce();
 }
 
 </script>
@@ -37,15 +25,15 @@ const getButtonLabel = () => {
       <el-form-item class="label" label="Жанр">
         <el-select
           class="select"
-          @update:modelValue="chooseGenre"
-          :model-value="store.state.filters.genre_type"
+          @update:modelValue="(genre) => {setFilter({ type: 'genre_type', value: genre })}"
+          :model-value="filters.genre_type"
           placeholder="Виберіть жанр"
           clearable
         >
           <el-option
             text-color="green"
             class="item-select"
-            v-for="genre in store.state.optionsForGenre"
+            v-for="genre in optionsForGenre"
             :key="genre"
             :label="genre.charAt(0).toUpperCase() + genre.slice(1)"
             :value="genre"
@@ -55,13 +43,13 @@ const getButtonLabel = () => {
       <el-form-item class="label" label="Рік випуску">
         <el-select
           class="select"
-          @update:modelValue="chooseYear"
-          :model-value="store.state.filters.year"
+          @update:modelValue="(year) => {setFilter({ type: 'year', value: year })}"
+          :model-value="filters.year"
           placeholder="Виберіть рік випуску"
           clearable
         >
           <el-option
-            v-for="year in store.state.optionsForYear"
+            v-for="year in optionsForYear"
             :key="year"
             :label="year"
             :value="year"
@@ -70,12 +58,12 @@ const getButtonLabel = () => {
         </el-select>
       </el-form-item>
       <el-form-item class="label" label="Рейтинг">
-        <el-input :model-value="store.state.filters.rating_score" @input="chooseRate" />
+        <el-input :model-value="filters.rating_score" @input="(value) => setFilter({ type: 'rating_score', value: value })" />
       </el-form-item>
       <button-main
-        :disable="store.state.isLoading"
-        :label="getButtonLabel()"
-        @onClick="applyFilter"
+        :disable="isLoading"
+        :label="isLoading? 'Генеруємоє...' : 'Генерувати'"
+        @onClick="generateFilm"
       />
     </el-form>
   </div>

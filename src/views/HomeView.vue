@@ -1,18 +1,18 @@
 <script setup>
-import { useStore } from 'vuex'
+import {mapState, mapActions} from "@/store/hooks";
 import { onMounted } from 'vue'
 import FiltersFilms from '../components/FiltersFilms.vue'
 import GeneratedFilm from "../components/GeneratedFilm.vue";
 
-const store = useStore()
+const {generatedFilms} = mapState()
+const {fetchFilmsWithFilter} = mapActions()
 
-onMounted(() => {
-  if(!store.getters.isDefaultFilter){
-    store.dispatch('applyFilter')
-  } else {
-    store.dispatch('fetchFilms')
+onMounted( () => {
+  if(!generatedFilms.value){
+    fetchFilmsWithFilter()
   }
 })
+
 </script>
 
 <template>
